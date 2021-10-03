@@ -162,16 +162,9 @@ v = TestFunction(W)
 def problem_solve(applied_disp,u,du,v):
 	# Updated boundary conditions 
 	top  =  CompiledSubDomain("near(x[1], topCoord)", topCoord = p_2_y)
-	btm  =  CompiledSubDomain("near(x[1], btmCoord)", btmCoord = p_1_y)
-	lft  =  CompiledSubDomain("near(x[0], lftCoord)", lftCoord = p_1_x)
-	rgt  =  CompiledSubDomain("near(x[0], rgtCoord)", rgtCoord = p_2_x)
-		
-	topBC = DirichletBC(W.sub(1), Constant((applied_disp/2.0)), top)
-	btmBC = DirichletBC(W.sub(1), Constant((-1.0*applied_disp/2.0)), btm)
-	lftBC = DirichletBC(W.sub(0), Constant((-1.0*applied_disp/2.0)), lft)
-	rgtBC = DirichletBC(W.sub(0), Constant((applied_disp/2.0)), rgt)
+	topBC = DirichletBC(W, Constant((0.0,applied_disp)), top)
 	
-	bcs = [btmBC, topBC, lftBC, rgtBC] 
+	bcs = [btmBC, topBC] 
 	
 	# Kinematics
 	d = len(u)
